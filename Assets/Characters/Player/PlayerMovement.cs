@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public Rigidbody RB;
+    public Buoyancy Buoyancy;
 
     public float MaxForwardSpeed;
     public float MaxBackwardSpeed;
@@ -23,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
     public AnimationCurve LookDampening;
 
-    private bool hover;
+    public float UnderwaterMass;
+    public float AirMass;
 
     private void Awake()
     {
@@ -38,10 +40,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (hover)
-        {
-            RB.AddForce(-Physics.gravity, ForceMode.Acceleration);
-        }
+        RB.useGravity = !Buoyancy.IsUnderwater;
+        RB.mass = Buoyancy.IsUnderwater ? UnderwaterMass : AirMass;
     }
 
 
@@ -79,14 +79,12 @@ public class PlayerMovement : MonoBehaviour
         {
             localForce.x = input.x * SidewaysAcceleration;
         }
-        hover = false;
         if (input.y == 0)
         {
             //No Space/Ctrl input (up/down)
-            localForce.y = -Deceleration * localVelocity.y;
-            if (localVelocity.y < 0 && Mathf.Abs(localVelocity.y) < (HoverThreshold / Deceleration))
+            if (!Buoyancy.IsUnderwater)
             {
-                hover = true;
+                localForce.y = -Deceleration * localVelocity.y;
             }
         }
         else if ((localVelocity.y > MaxVerticalSpeed && input.y > 0) || (localVelocity.y < -MaxVerticalSpeed && input.y < 0))
@@ -107,8 +105,6 @@ public class PlayerMovement : MonoBehaviour
     private void Update_Looking()
     {
         GetMouseInput(out Vector2 input);
-
-        Debug.Log(input);
 
         Vector3 rotation = transform.rotation.eulerAngles;
         float x = input.x;
