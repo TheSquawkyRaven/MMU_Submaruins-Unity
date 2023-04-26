@@ -6,6 +6,8 @@ using UnityEngine;
 public class Interactor : MonoBehaviour
 {
 
+    public PlayerInventory PlayerInventory;
+
     public Transform RaycastOrigin;
     public Transform RaycastDirection;
     public float Range;
@@ -20,6 +22,15 @@ public class Interactor : MonoBehaviour
     }
 
     private void Update()
+    {
+        Raycast();
+        if (Interactable != null && Input.GetKeyDown(KeyCode.E))
+        {
+            Interactable.Interact(PlayerInventory);
+        }
+    }
+
+    private void Raycast()
     {
         if (Physics.Raycast(RaycastOrigin.position, RaycastDirection.position - RaycastOrigin.position, out RaycastHit hit, Range, 1 << 7))
         {
