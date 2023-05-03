@@ -27,15 +27,13 @@ public class PlayerMovement : MonoBehaviour
     public float UnderwaterMass;
     public float AirMass;
 
-    private void Awake()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
     private void Update()
     {
         Update_Movement();
-        Update_Looking();
+        if (!PlayerInventory.Instance.IsActive)
+        {
+            Update_Looking();
+        }
     }
 
     private void FixedUpdate()

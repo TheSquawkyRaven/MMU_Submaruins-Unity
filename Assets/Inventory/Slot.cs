@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, IPointerClickHandler
 {
 
     public RectTransform RT;
@@ -16,7 +17,32 @@ public class Slot : MonoBehaviour
 
     [NonSerialized] public Item item;
 
-    public void SetDisplay()
+    public virtual void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("Click");
+        Item holdingItem = HoldingItem.Instance.Item();
+        if (holdingItem == null)
+        {
+            if (item == null)
+            {
+                SetDisplay();
+                return;
+            }
+            HoldingItem.Instance.Slot_SetItem(item);
+            item = null;
+            SetDisplay();
+            return;
+        }
+        if (item != null)
+        {
+            HoldingItem.Instance.Slot_SetItem(item);
+        }
+        item = holdingItem;
+        HoldingItem.Instance.Slot_ReceiveItem();
+        SetDisplay();
+    }
+
+    public virtual void SetDisplay()
     {
         if (item == null)
         {

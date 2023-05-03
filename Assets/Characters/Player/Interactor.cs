@@ -6,8 +6,6 @@ using UnityEngine;
 public class Interactor : MonoBehaviour
 {
 
-    public PlayerInventory PlayerInventory;
-
     public Transform RaycastOrigin;
     public Transform RaycastDirection;
     public float Range;
@@ -26,7 +24,12 @@ public class Interactor : MonoBehaviour
         Raycast();
         if (Interactable != null && Input.GetKeyDown(KeyCode.E))
         {
-            Interactable.Interact(PlayerInventory);
+            Interactable.Interact(PlayerInventory.Instance);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            PlayerInventory.Instance.ToggleInventory();
         }
     }
 
@@ -49,14 +52,29 @@ public class Interactor : MonoBehaviour
         {
             return;
         }
-        Interactable = interactable;
-        if (interactable == null)
+        if (Interactable != null)
         {
-            InteractableDisplayText.gameObject.SetActive(false);
+            Interactable.OnDestroy -= InteractableDestroyed;
+        }
+        Interactable = interactable;
+        if (Interactable == null)
+        {
+            DisableInteractable();
             return;
         }
+        Interactable.OnDestroy += InteractableDestroyed;
         InteractableDisplayText.gameObject.SetActive(true);
-        InteractableDisplayText.SetText($"Press 'E' to interact with [{interactable.Name}]");
+        InteractableDisplayText.SetText($"[E] - {Interactable.Name}");
+    }
+
+    private void InteractableDestroyed(Interactable interactable)
+    {
+        DisableInteractable();
+    }
+
+    private void DisableInteractable()
+    {
+        InteractableDisplayText.gameObject.SetActive(false);
     }
 
 }
