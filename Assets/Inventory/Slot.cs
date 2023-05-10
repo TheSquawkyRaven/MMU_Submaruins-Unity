@@ -19,7 +19,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
     public virtual void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Click");
         Item holdingItem = HoldingItem.Instance.Item();
         if (holdingItem == null)
         {

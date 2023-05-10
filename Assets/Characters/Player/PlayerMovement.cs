@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     public float UnderwaterMass;
     public float AirMass;
 
+    public Vector3 ApplyingForce;
+    public Vector3 ApplyingForceLocal;
+
     private void Update()
     {
         Update_Movement();
@@ -97,6 +100,8 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 force = transform.TransformDirection(localForce);
         RB.AddForce(force, ForceMode.Impulse);
+        ApplyingForce = force;
+        ApplyingForceLocal = localForce;
 
     }
 
