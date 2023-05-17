@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,11 @@ public class MainMenu : MonoBehaviour
 
     public CameraController CameraController;
     public Animator Animator;
+    public CanvasGroup CanvasGroup;
 
     public bool Autostart;
+
+    [NonSerialized] public bool Started = false;
 
     private void Awake()
     {
@@ -26,7 +30,6 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
@@ -35,6 +38,11 @@ public class MainMenu : MonoBehaviour
     {
         CameraController.FollowPlayer();
         Animator.SetTrigger("FadeOut");
+
+        CanvasGroup.interactable = false;
+        CanvasGroup.blocksRaycasts = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Started = true;
     }
 
 }
