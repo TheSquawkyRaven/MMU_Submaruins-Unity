@@ -7,26 +7,26 @@ public class PlayerModel : MonoBehaviour
 
     public PlayerMovement Movement;
 
-    public Animator TurbineAnimatorL;
-    public Animator TurbineAnimatorR;
+    public Animator ShipAnimator;
 
     private float turbineSpeed;
 
     private void Awake()
     {
-        TurbineAnimatorL.SetFloat("Speed", turbineSpeed);
-        TurbineAnimatorR.SetFloat("Speed", turbineSpeed);
+        ShipAnimator.SetFloat("Speed", turbineSpeed);
+        ShipAnimator.SetFloat("Speed", turbineSpeed);
     }
 
     private void Update()
     {
         Vector3 force = Movement.ApplyingForceLocal;
+        float f = force.magnitude;
 
-        float referenceSpeed = Mathf.Clamp(force.z, -1f, 1f);
+        float referenceSpeed = Mathf.Clamp(f, -1f, 1f);
         turbineSpeed = Mathf.Lerp(turbineSpeed, referenceSpeed, 0.01f);
 
-        TurbineAnimatorL.SetFloat("Speed", turbineSpeed);
-        TurbineAnimatorR.SetFloat("Speed", turbineSpeed);
+        ShipAnimator.SetFloat("Speed", turbineSpeed);
+        ShipAnimator.SetFloat("Speed", turbineSpeed);
     }
 
 }
