@@ -34,16 +34,22 @@ public class HoldingItem : Slot
     {
         return item;
     }
+    public ItemData ItemData()
+    {
+        return itemData;
+    }
 
-    public void Slot_SetItem(Item item)
+    public void Slot_SetItem(Item item, ItemData itemData)
     {
         this.item = item;
+        this.itemData = itemData;
         SetDisplay();
         HoldingItemObject.SetActive(true);
     }
     public void Slot_ReceiveItem()
     {
         item = null;
+        itemData = null;
         SetDisplay();
         HoldingItemObject.SetActive(false);
     }

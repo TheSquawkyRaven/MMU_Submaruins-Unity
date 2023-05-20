@@ -19,29 +19,51 @@ public class Inventory : MonoBehaviour
 
 
 
-    public bool AddItem(int id, int amount = 1)
+    public bool AddItem(int id, ItemData itemData)
     {
-        foreach (Slot slot in Slots)
+        bool stored = MatchAddItem(id, itemData);
+        if (stored)
         {
-            if (slot.item?.id == id)
-            {
-                slot.item.amount += amount;
-                slot.SetDisplay();
-                return true;
-            }
+            return true;
         }
         foreach (Slot slot in Slots)
         {
             if (slot.item == null)
             {
                 slot.item = ItemDatabase.Instance.GetItem(id);
-                slot.item.amount = amount;
+                slot.itemData = itemData;
                 slot.SetDisplay();
                 return true;
             }
         }
         return false;
 
+    }
+
+    public bool MatchAddItem(int id, ItemData itemData)
+    {
+        foreach (Slot slot in Slots)
+        {
+            if (slot.item?.id == id)
+            {
+                slot.itemData.Add(itemData);
+                slot.SetDisplay();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Slot FindItem(int id)
+    {
+        foreach (Slot slot in Slots)
+        {
+            if (slot.item?.id == id)
+            {
+                return slot;
+            }
+        }
+        return null;
     }
 
 

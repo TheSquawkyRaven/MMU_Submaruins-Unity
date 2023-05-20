@@ -32,6 +32,15 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 ApplyingForce;
     public Vector3 ApplyingForceLocal;
 
+    private float speedBoost = 1;
+    private float speedBoostTime;
+    public float SpeedBoost => speedBoost;
+
+    private void Awake()
+    {
+        speedBoost = 1;
+    }
+
     private void Update()
     {
         if (!MainMenu.Started)
@@ -39,10 +48,31 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        UpdateBoost();
         Update_Movement();
         if (!PlayerInventory.Instance.IsActive)
         {
             Update_Looking();
+        }
+    }
+
+    public void SetSpeedBoost(float speedBoost, float time)
+    {
+        this.speedBoost = speedBoost;
+        speedBoostTime = time;
+    }
+
+    private void UpdateBoost()
+    {
+        if (speedBoostTime < 0)
+        {
+            return;
+        }
+
+        speedBoostTime -= Time.deltaTime;
+        if (speedBoostTime <= 0)
+        {
+            speedBoost = 1;
         }
     }
 
@@ -62,47 +92,47 @@ public class PlayerMovement : MonoBehaviour
         if (input.z == 0)
         {
             //No W/S input (forward/backward)
-            localForce.z = -Deceleration * localVelocity.z;
+            localForce.z = -Deceleration * speedBoost * localVelocity.z;
         }
-        else if ((localVelocity.z > MaxForwardSpeed && input.z > 0) || (localVelocity.z < -MaxBackwardSpeed && input.z < 0))
+        else if ((localVelocity.z > MaxForwardSpeed * speedBoost && input.z > 0) || (localVelocity.z < -MaxBackwardSpeed * speedBoost && input.z < 0))
         {
             //Cannot speed up, if exceed forward/backward speed, based on W/S input direction
             localForce.z = 0;
         }
         else
         {
-            localForce.z = input.z * (input.z > 0 ? ForwardAcceleration : BackwardAcceleration);
+            localForce.z = input.z * (input.z > 0 ? ForwardAcceleration * speedBoost : BackwardAcceleration * speedBoost);
         }
         if (input.x == 0)
         {
             //No A/D input (left/right)
-            localForce.x = -Deceleration * localVelocity.x;
+            localForce.x = -Deceleration * speedBoost * localVelocity.x;
         }
-        else if ((localVelocity.x > MaxSidewaysSpeed && input.x > 0) || (localVelocity.x < -MaxSidewaysSpeed && input.x < 0))
+        else if ((localVelocity.x > MaxSidewaysSpeed * speedBoost && input.x > 0) || (localVelocity.x < -MaxSidewaysSpeed * speedBoost && input.x < 0))
         {
             //Cannot speed up, if exceed right/left speed, based on A/D input direction
             localForce.x = 0;
         }
         else
         {
-            localForce.x = input.x * SidewaysAcceleration;
+            localForce.x = input.x * SidewaysAcceleration * speedBoost;
         }
         if (input.y == 0)
         {
             //No Space/Ctrl input (up/down)
             if (!Buoyancy.IsUnderwater)
             {
-                localForce.y = -Deceleration * localVelocity.y;
+                localForce.y = -Deceleration * speedBoost * localVelocity.y;
             }
         }
-        else if ((localVelocity.y > MaxVerticalSpeed && input.y > 0) || (localVelocity.y < -MaxVerticalSpeed && input.y < 0))
+        else if ((localVelocity.y > MaxVerticalSpeed * speedBoost && input.y > 0) || (localVelocity.y < -MaxVerticalSpeed * speedBoost && input.y < 0))
         {
             //Cannot speed up, if exceed up/down speed, based on Space/Ctrl input direction
             localForce.y = 0;
         }
         else
         {
-            localForce.y = input.y * VerticalAcceleration;
+            localForce.y = input.y * VerticalAcceleration * speedBoost;
         }
 
         Vector3 force = transform.TransformDirection(localForce);

@@ -7,11 +7,12 @@ public class PlayerInventory : MonoBehaviour
     private static PlayerInventory instance;
     public static PlayerInventory Instance => instance;
 
-    public GameObject InventoryObject;
+    public Canvas InventoryCanvas;
+    public Inventory Equipment;
     public Inventory Storage;
     public Inventory Toolbar;
 
-    public bool IsActive => InventoryObject.activeSelf;
+    public bool IsActive => InventoryCanvas.enabled;
 
     private void Awake()
     {
@@ -19,33 +20,54 @@ public class PlayerInventory : MonoBehaviour
         EnableInventory(false);
     }
 
-    public bool AddItem(int itemID)
+    public bool AddItem(int itemID, ItemData itemData)
     {
-        bool stored = Storage.AddItem(itemID);
+        // Uncomment if items go directly into equipment
+        //bool stored = Equipment.MatchAddItem(itemID, itemData);
+        //if (stored)
+        //{
+        //    return true;
+        //}
+        bool stored = Storage.AddItem(itemID, itemData);
         if (stored)
         {
             return true;
         }
-        stored = Toolbar.AddItem(itemID);
+        stored = Toolbar.AddItem(itemID, itemData);
         return stored;
     }
 
     public void ToggleInventory()
     {
-        EnableInventory(!InventoryObject.activeSelf);
+        if (!MainMenu.Instance.Started)
+        {
+            return;
+        }
+        EnableInventory(!InventoryCanvas.enabled);
     }
 
     public void EnableInventory(bool enable)
     {
         if (!enable)
         {
-            InventoryObject.SetActive(false);
+            InventoryCanvas.enabled = false;
+
             Cursor.lockState = CursorLockMode.Locked;
             return;
         }
-        InventoryObject.SetActive(true);
+        InventoryCanvas.enabled = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
+    public Slot FindItem(int id, bool getFromToolbar)
+    {
+        Slot slot = Storage.FindItem(id);
+        if (slot != null || !getFromToolbar)
+        {
+            return slot;
+        }
+        slot = Toolbar.FindItem(id);
+        return slot;
+    }
 
 }
