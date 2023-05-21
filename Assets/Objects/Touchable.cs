@@ -5,6 +5,10 @@ using UnityEngine;
 public class Touchable : MonoBehaviour
 {
 
+    public GameObject ModelObject;
+    public Collider Collider;
+    public AudioSource OnUsedAudio;
+
     public bool IsSpeedBoost;
     public float SpeedBoost;
     public float Time;
@@ -13,14 +17,20 @@ public class Touchable : MonoBehaviour
 
     public void Used()
     {
-        MainMenu.Instance.StartCoroutine(Reactivate());
-        gameObject.SetActive(false);
+        if (OnUsedAudio != null)
+        {
+            OnUsedAudio.Play();
+        }
+        StartCoroutine(Reactivate());
+        ModelObject.SetActive(false);
+        Collider.enabled = false;
     }
 
     private IEnumerator Reactivate()
     {
         yield return new WaitForSeconds(Cooldown);
-        gameObject.SetActive(true);
+        ModelObject.SetActive(true);
+        Collider.enabled = true;
     }
 
 }

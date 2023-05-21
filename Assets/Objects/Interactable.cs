@@ -13,15 +13,16 @@ public class Interactable : MonoBehaviour
 
     public event Action<Interactable> OnDestroy = _ => { };
 
-    public void Interact(PlayerInventory playerInventory)
+    public bool Interact(PlayerInventory playerInventory)
     {
         if (playerInventory.AddItem(itemID, itemData))
         {
             OnDestroy.Invoke(this);
             Destroy(gameObject);
-            return;
+            return true;
         }
         //Full
+        return false;
     }
 
 

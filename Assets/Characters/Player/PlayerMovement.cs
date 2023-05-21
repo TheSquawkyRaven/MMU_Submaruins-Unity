@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 ApplyingForce;
     public Vector3 ApplyingForceLocal;
 
+    public ParticleSystem SpeedBoostParticles;
     private float speedBoost = 1;
     private float speedBoostTime;
     public float SpeedBoost => speedBoost;
@@ -60,6 +61,9 @@ public class PlayerMovement : MonoBehaviour
     {
         this.speedBoost = speedBoost;
         speedBoostTime = time;
+        ParticleSystem.EmissionModule emission = SpeedBoostParticles.emission;
+        emission.rateOverDistance = speedBoost * 10;
+        SpeedBoostParticles.Play();
     }
 
     private void UpdateBoost()
@@ -73,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
         if (speedBoostTime <= 0)
         {
             speedBoost = 1;
+            SpeedBoostParticles.Stop();
         }
     }
 

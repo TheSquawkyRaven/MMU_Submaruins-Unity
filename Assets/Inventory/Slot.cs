@@ -34,7 +34,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             if (item.id == holdingItem.id)
             {
                 itemData.Add(holdingItemData);
-                HoldingItem.Instance.Slot_ReceiveItem();
+                HoldingItem.Instance.ReceiveItem(null, null);
                 SetDisplay();
                 return;
             }
@@ -48,20 +48,20 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                 SetDisplay();
                 return;
             }
-            HoldingItem.Instance.Slot_SetItem(item, itemData);
-            item = null;
-            itemData = null;
-            SetDisplay();
+            
+            HoldingItem.Instance.ReceiveItem(item, itemData);
+            ReceiveItem(null, null);
             return;
         }
         if (item != null)
         {
-            HoldingItem.Instance.Slot_SetItem(item, itemData);
+            HoldingItem.Instance.ReceiveItem(item, itemData);
         }
-        item = holdingItem;
-        itemData = holdingItemData;
-        HoldingItem.Instance.Slot_ReceiveItem();
-        SetDisplay();
+        else
+        {
+            HoldingItem.Instance.ReceiveItem(null, null);
+        }
+        ReceiveItem(holdingItem, holdingItemData);
     }
 
     [ContextMenu("Set Display")]
@@ -84,7 +84,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
     }
 
-    public void TransferToSlot(Slot other)
+    public virtual void TransferToSlot(Slot other)
     {
         other.item = item;
         other.itemData = itemData;
@@ -94,5 +94,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         other.SetDisplay();
     }
 
+    public virtual void ReceiveItem(Item item, ItemData itemData)
+    {
+        this.item = item;
+        this.itemData = itemData;
+        SetDisplay();
+    }
 
 }

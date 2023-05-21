@@ -10,9 +10,11 @@ public class Interactor : MonoBehaviour
     public Transform RaycastDirection;
     public float Range;
 
-    public Interactable Interactable;
+    private Interactable Interactable;
 
     public TextMeshProUGUI InteractableDisplayText;
+
+    public AudioSource PickupAudio;
 
     private void Start()
     {
@@ -24,7 +26,11 @@ public class Interactor : MonoBehaviour
         Raycast();
         if (Interactable != null && Input.GetKeyDown(KeyCode.E))
         {
-            Interactable.Interact(PlayerInventory.Instance);
+            bool pickedUp = Interactable.Interact(PlayerInventory.Instance);
+            if (pickedUp)
+            {
+                PickupAudio.Play();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
