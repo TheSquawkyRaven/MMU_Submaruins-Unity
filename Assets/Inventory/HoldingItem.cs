@@ -30,25 +30,10 @@ public class HoldingItem : Slot
         }
     }
 
-    public Item Item()
+    public override void SetItem(Item item, ItemData itemData)
     {
-        return item;
-    }
-    public ItemData ItemData()
-    {
-        return itemData;
-    }
-
-    public override void ReceiveItem(Item item, ItemData itemData)
-    {
-        base.ReceiveItem(item, itemData);
-        HoldingItemObject.SetActive(true);
-    }
-
-    public override void TransferToSlot(Slot other)
-    {
-        base.TransferToSlot(other);
-        HoldingItemObject.SetActive(false);
+        base.SetItem(item, itemData);
+        HoldingItemObject.SetActive(item != null);
     }
 
 

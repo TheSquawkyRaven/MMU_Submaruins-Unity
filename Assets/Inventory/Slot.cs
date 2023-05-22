@@ -16,14 +16,23 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public Image Image;
     public TextMeshProUGUI AmountText;
 
-    [NonSerialized] public Item item;
-    [NonSerialized] public ItemData itemData;
+    [NonSerialized] private Item item;
+    [NonSerialized] private ItemData itemData;
+
+    public Item Item => item;
+    public ItemData ItemData => itemData;
+
+    public event Action<Item, ItemData> OnItemUpdated = (_, _) => { };
+
     public bool cannotBeTaken = false;
+    public bool CheckAllowedIDs = false;
+    public int[] AllowedIDs { get; set; } = new int[0];
 
     public virtual void OnPointerClick(PointerEventData eventData)
     {
-        Item holdingItem = HoldingItem.Instance.Item();
-        ItemData holdingItemData = HoldingItem.Instance.ItemData();
+        Item holdingItem = HoldingItem.Instance.Item;
+        ItemData holdingItemData = HoldingItem.Instance.ItemData;
+
 
         if (cannotBeTaken)
         {
@@ -31,11 +40,21 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             {
                 return;
             }
+            if (item == null)
+            {
+                if (!Allowed(holdingItem.id))
+                {
+                    return;
+                }
+
+                HoldingItem.Instance.SetItem(null, null);
+                SetItem(holdingItem, holdingItemData);
+                return;
+            }
             if (item.id == holdingItem.id)
             {
-                itemData.Add(holdingItemData);
-                HoldingItem.Instance.ReceiveItem(null, null);
-                SetDisplay();
+                AddItemData(holdingItemData);
+                HoldingItem.Instance.SetItem(null, null);
                 return;
             }
             return;
@@ -49,19 +68,45 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                 return;
             }
             
-            HoldingItem.Instance.ReceiveItem(item, itemData);
-            ReceiveItem(null, null);
+            HoldingItem.Instance.SetItem(item, itemData);
+            SetItem(null, null);
             return;
         }
+
+        if (!Allowed(holdingItem.id))
+        {
+            return;
+        }
+
+
         if (item != null)
         {
-            HoldingItem.Instance.ReceiveItem(item, itemData);
+            HoldingItem.Instance.SetItem(item, itemData);
         }
         else
         {
-            HoldingItem.Instance.ReceiveItem(null, null);
+            HoldingItem.Instance.SetItem(null, null);
         }
-        ReceiveItem(holdingItem, holdingItemData);
+        SetItem(holdingItem, holdingItemData);
+    }
+
+    public bool Allowed(int itemID)
+    {
+        if (!CheckAllowedIDs)
+        {
+            return true;
+        }
+        if (CheckAllowedIDs)
+        {
+            for (int i = 0; i < AllowedIDs.Length; i++)
+            {
+                if (itemID == AllowedIDs[i])
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     [ContextMenu("Set Display")]
@@ -86,19 +131,27 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
     public virtual void TransferToSlot(Slot other)
     {
-        other.item = item;
-        other.itemData = itemData;
-        item = null;
-        itemData = null;
-        SetDisplay();
-        other.SetDisplay();
+        other.SetItem(item, itemData);
+        SetItem(null, null);
     }
 
-    public virtual void ReceiveItem(Item item, ItemData itemData)
+    public virtual void SetItem(Item item, ItemData itemData)
     {
         this.item = item;
         this.itemData = itemData;
-        SetDisplay();
+        ItemUpdate();
     }
+    public virtual void AddItemData(ItemData itemData)
+    {
+        this.itemData.Add(itemData);
+        ItemUpdate();
+    }
+
+    public virtual void ItemUpdate()
+    {
+        SetDisplay();
+        OnItemUpdated.Invoke(Item, ItemData);
+    }
+
 
 }

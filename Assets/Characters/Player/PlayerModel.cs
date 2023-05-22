@@ -23,7 +23,7 @@ public class PlayerModel : MonoBehaviour
         float f = force.magnitude;
 
         float referenceSpeed = Mathf.Clamp(f, -1f, 1f);
-        turbineSpeed = Mathf.Lerp(turbineSpeed, referenceSpeed * Movement.SpeedBoost, 0.01f);
+        turbineSpeed = Mathf.Lerp(turbineSpeed, referenceSpeed * Movement.TotalBoost, 0.01f);
 
         ShipAnimator.SetFloat("Speed", turbineSpeed);
         ShipAnimator.SetFloat("Speed", turbineSpeed);

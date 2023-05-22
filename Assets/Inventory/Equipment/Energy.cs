@@ -11,11 +11,17 @@ public class Energy : MonoBehaviour
     public TextMeshProUGUI EnergyRemainingTextHUD;
     public int EnergyItemID;
 
-    public Item Item => Slot.item;
-    public ItemData ItemData => Slot.itemData;
+    public Item Item => Slot.Item;
+    public ItemData ItemData => Slot.ItemData;
 
     private bool timeRemainingZero;
     public float TimeRemaining { get; set; }
+
+    private void Start()
+    {
+        Slot.CheckAllowedIDs = true;
+        Slot.AllowedIDs = new int[] { EnergyItemID };
+    }
 
     private void Update()
     {
@@ -93,8 +99,7 @@ public class Energy : MonoBehaviour
 
     private void Depleted()
     {
-        Slot.item = null;
-        Slot.itemData = null;
+        Slot.SetItem(null, null);
         Slot.SetDisplay();
     }
 

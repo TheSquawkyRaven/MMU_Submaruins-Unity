@@ -11,7 +11,11 @@ public class Item
 
     public Sprite sprite;
 
+    //Static, use for reference
     public float float1;
+
+    //Dynamic, will be copied to ItemData
+    public float dfloat1;
 
 }
 

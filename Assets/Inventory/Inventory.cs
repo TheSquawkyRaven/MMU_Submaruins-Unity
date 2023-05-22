@@ -28,10 +28,9 @@ public class Inventory : MonoBehaviour
         }
         foreach (Slot slot in Slots)
         {
-            if (slot.item == null)
+            if (slot.Item == null)
             {
-                slot.item = ItemDatabase.Instance.GetItem(id);
-                slot.itemData = itemData;
+                slot.SetItem(ItemDatabase.Instance.GetItem(id), itemData);
                 slot.SetDisplay();
                 return true;
             }
@@ -44,9 +43,9 @@ public class Inventory : MonoBehaviour
     {
         foreach (Slot slot in Slots)
         {
-            if (slot.item?.id == id)
+            if (slot.Item?.id == id)
             {
-                slot.itemData.Add(itemData);
+                slot.AddItemData(itemData);
                 slot.SetDisplay();
                 return true;
             }
@@ -58,7 +57,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (Slot slot in Slots)
         {
-            if (slot.item?.id == id)
+            if (slot.Item?.id == id)
             {
                 return slot;
             }

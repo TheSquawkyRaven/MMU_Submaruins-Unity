@@ -147,7 +147,7 @@ MonoBehaviour:
   Collider: {fileID: 7660961807839005484}
   OnUsedAudio: {fileID: 5809626467484990234}
   IsSpeedBoost: 1
-  SpeedBoost: 5
+  SpeedBoost: 4
   Time: 5
   Cooldown: 10
 --- !u!82 &5809626467484990234
