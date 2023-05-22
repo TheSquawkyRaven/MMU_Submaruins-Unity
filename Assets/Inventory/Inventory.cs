@@ -41,6 +41,11 @@ public class Inventory : MonoBehaviour
 
     public bool MatchAddItem(int id, ItemData itemData)
     {
+        Item item = ItemDatabase.Instance.GetItem(id);
+        if (!item.Stackable)
+        {
+            return false;
+        }
         foreach (Slot slot in Slots)
         {
             if (slot.Item?.id == id)

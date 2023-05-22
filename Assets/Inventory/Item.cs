@@ -11,6 +11,8 @@ public class Item
 
     public Sprite sprite;
 
+    public bool Stackable = true;
+
     //Static, use for reference
     public float float1;
 
