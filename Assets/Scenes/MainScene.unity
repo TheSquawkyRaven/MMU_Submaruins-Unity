@@ -3322,6 +3322,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 542015765}
     m_Modifications:
+    - target: {fileID: 4795465638457409974, guid: d6592b7518c428a469894910e9c5511e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2373532d000362b4f97187dbc5b89819, type: 2}
     - target: {fileID: 4795465638459613046, guid: d6592b7518c428a469894910e9c5511e, type: 3}
       propertyPath: m_Name
       value: Propeller
@@ -13025,6 +13029,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 542015765}
     m_Modifications:
+    - target: {fileID: 4795465638457409974, guid: d6592b7518c428a469894910e9c5511e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2373532d000362b4f97187dbc5b89819, type: 2}
     - target: {fileID: 4795465638459613046, guid: d6592b7518c428a469894910e9c5511e, type: 3}
       propertyPath: m_Name
       value: Propeller
@@ -19290,6 +19298,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 542015765}
     m_Modifications:
+    - target: {fileID: 4795465638457409974, guid: d6592b7518c428a469894910e9c5511e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2373532d000362b4f97187dbc5b89819, type: 2}
     - target: {fileID: 4795465638459613046, guid: d6592b7518c428a469894910e9c5511e, type: 3}
       propertyPath: m_Name
       value: Propeller
@@ -19474,6 +19486,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 542015765}
     m_Modifications:
+    - target: {fileID: 4795465638457409974, guid: d6592b7518c428a469894910e9c5511e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2373532d000362b4f97187dbc5b89819, type: 2}
     - target: {fileID: 4795465638459613046, guid: d6592b7518c428a469894910e9c5511e, type: 3}
       propertyPath: m_Name
       value: Propeller
