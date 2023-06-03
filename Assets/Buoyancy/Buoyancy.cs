@@ -5,7 +5,7 @@ using UnityEngine;
 public class Buoyancy : MonoBehaviour
 {
 
-    public static float WaterHeight = 76;
+    public static float WaterHeight = 482;
 
     public Rigidbody RB;
 
