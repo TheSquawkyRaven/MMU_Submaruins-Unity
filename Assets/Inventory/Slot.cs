@@ -151,6 +151,20 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     {
         SetDisplay();
         OnItemUpdated.Invoke(Item, ItemData);
+        PlayerInventory.Instance.InventoryChange();
+    }
+
+    public virtual void RemoveAmount(int amount)
+    {
+        itemData.amount -= amount;
+        if (itemData.amount <= 0)
+        {
+            SetItem(null, null);
+        }
+        else
+        {
+            ItemUpdate();
+        }
     }
 
 

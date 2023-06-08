@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +15,17 @@ public class PlayerInventory : MonoBehaviour
 
     public bool IsActive => InventoryCanvas.enabled;
 
+    public event Action InventoryChanged = () => { };
+
     private void Awake()
     {
         instance = this;
         EnableInventory(false);
+    }
+
+    public void InventoryChange()
+    {
+        InventoryChanged.Invoke();
     }
 
     public bool AddItem(int itemID, ItemData itemData)

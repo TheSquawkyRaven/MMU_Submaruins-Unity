@@ -1,25 +1,103 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Recipe : MonoBehaviour
 {
 
+    [System.Serializable]
+    public class RecipeUI
+    {
+        public GameObject Obj;
+        public Image Image;
+        public TextMeshProUGUI Text;
+    }
+
     public TextMeshProUGUI RecipeTitleText;
     public Button CraftButton;
 
-    public GameObject Ingredient1;
-    public GameObject Ingredient2;
-    public GameObject Ingredient3;
+    public RecipeUI[] RecipeUIs;
 
-    public Image Ingredient1Image;
-    public Image Ingredient2Image;
-    public Image Ingredient3Image;
+    private Crafting.RecipeData RecipeData;
 
-    public TextMeshProUGUI Ingredient1Text;
-    public TextMeshProUGUI Ingredient2Text;
-    public TextMeshProUGUI Ingredient3Text;
+    public void SetRecipe(Crafting.RecipeData data)
+    {
+        RecipeData = data;
+        Item item = ItemDatabase.Instance.GetItem(data.ResultID);
+        RecipeTitleText.SetText(item.name);
+
+        int i = 0;
+        for (; i < data.IngredientIDs.Length; i++)
+        {
+            Item ingredient = ItemDatabase.Instance.GetItem(data.IngredientIDs[i]);
+            RecipeUIs[i].Image.sprite = ingredient.sprite;
+            RecipeUIs[i].Text.SetText(data.IngredientAmount[i].ToString());
+            RecipeUIs[i].Obj.SetActive(true);
+        }
+        for (; i < RecipeUIs.Length; i++)
+        {
+            RecipeUIs[i].Obj.SetActive(false);
+        }
+
+        CraftButton.onClick.AddListener(Craft);
+        PlayerInventory.Instance.InventoryChanged += Instance_InventoryChanged;
+
+    }
+
+    private void Instance_InventoryChanged()
+    {
+        Slot[] slots = CanCraft();
+        if (slots == null)
+        {
+            CraftButton.interactable = false;
+        }
+        else
+        {
+            CraftButton.interactable = true;
+        }
+    }
+
+    public Slot[] CanCraft()
+    {
+        Slot[] slots = new Slot[RecipeData.IngredientIDs.Length];
+        for (int i = 0; i < RecipeData.IngredientIDs.Length; i++)
+        {
+            Slot slot = PlayerInventory.Instance.FindItem(RecipeData.IngredientIDs[i], true);
+            if (slot == null)
+            {
+                // Item not found
+                return null;
+            }
+
+            if (slot.ItemData.amount < RecipeData.IngredientAmount[i])
+            {
+                // Not enough
+                return null;
+            }
+            slots[i] = slot;
+        }
+        return slots;
+    }
+
+    public void Craft()
+    {
+        Slot[] slots = CanCraft();
+        if (slots == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].RemoveAmount(RecipeData.IngredientAmount[i]);
+        }
+        PlayerInventory.Instance.AddItem(RecipeData.ResultID, new()
+        {
+            amount = 1,
+        });
+    }
 
 }

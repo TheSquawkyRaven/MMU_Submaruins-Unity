@@ -13,7 +13,7 @@ public class Interactable : MonoBehaviour
 
     public event Action<Interactable> OnDestroy = _ => { };
 
-    public bool Interact(PlayerInventory playerInventory)
+    public virtual bool Interact(PlayerInventory playerInventory)
     {
         if (playerInventory.AddItem(itemID, itemData))
         {

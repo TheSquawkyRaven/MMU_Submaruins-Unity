@@ -35,6 +35,7 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
+        PlayerInventory.Instance.InventoryChange();
         return false;
 
     }
@@ -55,6 +56,7 @@ public class Inventory : MonoBehaviour
                 return true;
             }
         }
+        PlayerInventory.Instance.InventoryChange();
         return false;
     }
 
