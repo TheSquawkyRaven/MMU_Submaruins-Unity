@@ -28,7 +28,7 @@ public class GarbageManager : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             Vector3 start = new(Random.Range(bounds.min.x, bounds.max.x), bounds.min.y, Random.Range(bounds.min.z, bounds.max.z));
-            if (Physics.Raycast(start, Vector3.down, out RaycastHit hit, 500))
+            if (Physics.Raycast(start, Vector3.down, out RaycastHit hit, 500, 1 << 10))
             {
                 GameObject spawn = GarbagePrefabs[Random.Range(0, GarbagePrefabs.Length)];
                 GameObject obj = Instantiate(spawn, hit.point, Quaternion.identity);

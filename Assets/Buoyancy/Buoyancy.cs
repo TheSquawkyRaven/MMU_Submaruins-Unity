@@ -11,6 +11,8 @@ public class Buoyancy : MonoBehaviour
 
     public bool IsUnderwater;
 
+    public bool StopUpwardsFloat;
+
     public float WaterDrag;
     public float WaterAngularDrag;
 
@@ -31,7 +33,15 @@ public class Buoyancy : MonoBehaviour
         float yDiff = transform.position.y - WaterHeight + (Random.Range(-WavesHeight, WavesHeight));
         if (yDiff < 0)
         {
-            RB.AddForceAtPosition(Vector3.up * FloatingStrength * Mathf.Abs(yDiff), transform.position + new Vector3(Random.Range(-Jankyness, Jankyness), Random.Range(-Jankyness, Jankyness), Random.Range(-Jankyness, Jankyness)), ForceMode.Force);
+            if (!StopUpwardsFloat)
+            {
+                RB.AddForceAtPosition(Vector3.up * FloatingStrength * Mathf.Abs(yDiff), transform.position + new Vector3(Random.Range(-Jankyness, Jankyness), Random.Range(-Jankyness, Jankyness), Random.Range(-Jankyness, Jankyness)), ForceMode.Force);
+            }
+            else
+            {
+                RB.AddForceAtPosition(new Vector3(0, Random.value, 0) * Random.Range(-WavesHeight, WavesHeight), transform.position + new Vector3(Random.Range(-Jankyness, Jankyness), Random.Range(-Jankyness, Jankyness), Random.Range(-Jankyness, Jankyness)), ForceMode.Force);
+                RB.useGravity = false;
+            }
             if (!IsUnderwater)
             {
                 IsUnderwater = true;
@@ -40,6 +50,7 @@ public class Buoyancy : MonoBehaviour
         }
         else
         {
+            RB.useGravity = true;
             IsUnderwater = false;
             UnderwaterStateChanged();
         }
