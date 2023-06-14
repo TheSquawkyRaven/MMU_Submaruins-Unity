@@ -78,5 +78,10 @@ public class Drone : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void ShotDestroy()
+    {
+        Explode();
+    }
+
 
 }

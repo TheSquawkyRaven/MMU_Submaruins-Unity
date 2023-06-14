@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 5162817823810916924}
   - component: {fileID: 8016835700804427656}
   - component: {fileID: 6197386951480843732}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1471972089695131192}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Robot_Scout_HyperX_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 1473510244592660316}
   - component: {fileID: 1447794432286442628}
   - component: {fileID: 1454846064525316192}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body_Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 1473764969448331462}
   - component: {fileID: 1448555574408001660}
   - component: {fileID: 1455183581429598494}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
