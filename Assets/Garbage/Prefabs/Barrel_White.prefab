@@ -196,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RB: {fileID: -5521306282164473943}
   IsUnderwater: 0
+  StopUpwardsFloat: 0
   WaterDrag: 3
   WaterAngularDrag: 2
   AirDrag: 0
@@ -228,7 +229,6 @@ GameObject:
   - component: {fileID: 8024862767832349510}
   - component: {fileID: 8008810264726457930}
   - component: {fileID: 7998825813970844642}
-  - component: {fileID: 8021951450542424329}
   m_Layer: 7
   m_Name: Barrel_White_LOD0
   m_TagString: Untagged
@@ -301,20 +301,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8021951450542424329
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8021951450542424326}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.2944725
-  m_Height: 0.8554741
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.40223706, z: 0}
 --- !u!1 &8021951450727839028
 GameObject:
   m_ObjectHideFlags: 0

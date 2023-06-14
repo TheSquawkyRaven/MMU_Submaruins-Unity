@@ -41,13 +41,14 @@ public class Interactor : MonoBehaviour
 
     private void Raycast()
     {
-        if (Physics.Raycast(RaycastOrigin.position, RaycastDirection.position - RaycastOrigin.position, out RaycastHit hit, Range, 1 << 7))
+        if (Physics.SphereCast(RaycastOrigin.position, 1, RaycastDirection.position - RaycastOrigin.position, out RaycastHit hit, Range, 1 << 7))
         {
             if (hit.collider.TryGetComponent(out Interactable interactable))
             {
                 InteractableChanged(interactable);
                 return;
             }
+            Debug.Log($"Not an interactable: {hit.collider.gameObject.name}");
         }
         InteractableChanged(null);
     }

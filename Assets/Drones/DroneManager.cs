@@ -12,9 +12,13 @@ public class DroneManager : MonoBehaviour
 
     public Renderer Renderer;
 
+    public Transform DroneContainer;
+
     public float MaxHeight;
 
     public int amount;
+    public int destroyedAmount;
+
 
     private void Awake()
     {
@@ -34,7 +38,7 @@ public class DroneManager : MonoBehaviour
                 Vector3 spawnPos = hit.point;
                 spawnPos.y = Random.Range(spawnPos.y, MaxHeight);
                 GameObject obj = Instantiate(spawn, hit.point, Quaternion.identity);
-                obj.transform.SetParent(transform);
+                obj.transform.SetParent(DroneContainer);
                 obj.GetComponent<Drone>().PlayerTR = PlayerTR;
             }
             else
@@ -45,6 +49,12 @@ public class DroneManager : MonoBehaviour
 
         }
 
+    }
+
+    public void DroneDestroyed()
+    {
+        destroyedAmount++;
+        Score.Instance.UpdateScore();
     }
 
 }

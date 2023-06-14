@@ -12,6 +12,8 @@ public class GarbageManager : MonoBehaviour
 
     public Renderer Renderer;
 
+    public Transform GarbageContainer;
+
     public int amount;
 
     public int collectedAmount;
@@ -32,7 +34,7 @@ public class GarbageManager : MonoBehaviour
             {
                 GameObject spawn = GarbagePrefabs[Random.Range(0, GarbagePrefabs.Length)];
                 GameObject obj = Instantiate(spawn, hit.point, Quaternion.identity);
-                obj.transform.SetParent(transform);
+                obj.transform.SetParent(GarbageContainer);
                 obj.GetComponent<Rigidbody>().mass = Random.Range(12f, 20f);
             }
             else
@@ -48,6 +50,7 @@ public class GarbageManager : MonoBehaviour
     public void Collected()
     {
         collectedAmount++;
+        Score.Instance.UpdateScore();
     }
 
 }
