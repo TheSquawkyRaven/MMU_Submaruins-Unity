@@ -13,6 +13,9 @@ public class Touchable : MonoBehaviour
     public float SpeedBoost;
     public float Time;
 
+    public bool IsHealthBoost;
+    public int HealthBoost;
+
     public float Cooldown;
 
     public void Used()

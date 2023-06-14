@@ -6,7 +6,7 @@ public class Toucher : MonoBehaviour
 {
 
     public PlayerMovement PlayerMovement;
-
+    public Player Player;
 
 
     private void OnTriggerEnter(Collider other)
@@ -17,8 +17,13 @@ public class Toucher : MonoBehaviour
             {
                 PlayerMovement.SetSpeedBoost(touchable.SpeedBoost, touchable.Time);
             }
+            if (touchable.IsHealthBoost)
+            {
+                Player.IncreaseHealth(touchable.HealthBoost);
+            }
             touchable.Used();
         }
     }
+
 
 }

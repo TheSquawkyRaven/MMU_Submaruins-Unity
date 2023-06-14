@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 5871566930452366073}
   - component: {fileID: 5809626467484990234}
   - component: {fileID: 6872968652608199402}
+  - component: {fileID: 2097068552028128354}
   m_Layer: 8
   m_Name: SpeedPowerup
   m_TagString: Untagged
@@ -150,6 +151,8 @@ MonoBehaviour:
   IsSpeedBoost: 1
   SpeedBoost: 4
   Time: 5
+  IsHealthBoost: 0
+  HealthBoost: 0
   Cooldown: 10
 --- !u!82 &5809626467484990234
 AudioSource:
@@ -309,6 +312,26 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &2097068552028128354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4767500570742154825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &4767500570742154829
 GameObject:
   m_ObjectHideFlags: 0

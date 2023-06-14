@@ -8,6 +8,8 @@ public class Drone : MonoBehaviour
     public Light ArmLight;
 
     public Transform PlayerTR;
+    public GameObject Explosion;
+
     public float MoveSpeed;
 
     public bool playerDetected;
@@ -17,6 +19,9 @@ public class Drone : MonoBehaviour
     private float explodeCount;
 
     public float ArmBlink;
+
+    public float ExplodeDistance;
+    public int Damage;
 
     public void DetectedPlayer(Transform PlayerTR)
     {
@@ -64,6 +69,12 @@ public class Drone : MonoBehaviour
 
     private void Explode()
     {
+        Instantiate(Explosion, transform.position, transform.rotation);
+        float dist = Vector3.Distance(Player.Instance.transform.position, transform.position);
+        if (dist < ExplodeDistance)
+        {
+            Player.Instance.DecreaseHealth(Damage);
+        }
         Destroy(gameObject);
     }
 

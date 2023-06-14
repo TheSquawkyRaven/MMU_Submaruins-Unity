@@ -44,7 +44,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 50
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7973288114229018360
 MonoBehaviour:
@@ -112,11 +112,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ArmLight: {fileID: 8016835700804427656}
   PlayerTR: {fileID: 0}
+  Explosion: {fileID: 798647669754828810, guid: 52b933d5801b8ad48b79594c8e2273e5, type: 3}
   MoveSpeed: 5
   playerDetected: 0
   Arming: 0
   ExplodeCountdown: 4
   ArmBlink: 0.2
+  ExplodeDistance: 5
+  Damage: 20
 --- !u!135 &970498644139326853
 SphereCollider:
   m_ObjectHideFlags: 0
