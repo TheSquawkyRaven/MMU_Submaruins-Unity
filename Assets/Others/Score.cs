@@ -32,6 +32,13 @@ public class Score : MonoBehaviour
         ScoreText.SetText($"Score: {score}");
         GarbageText.SetText($"Garbage Removed: {GarbageManager.Instance.collectedAmount}/{GarbageManager.Instance.TotalAmount}");
         DronesText.SetText($"Drones Destroyed: {DroneManager.Instance.destroyedAmount}/{DroneManager.Instance.amount}");
+
+        if (GarbageManager.Instance.collectedAmount == GarbageManager.Instance.TotalAmount && DroneManager.Instance.destroyedAmount == DroneManager.Instance.amount)
+        {
+            SceneData.Instance.ScoreDescription = "You restored the ocean completely 100%!\nCONGRATULATIONS!";
+            SceneData.Instance.GoToScoreScreen();
+        }
+        SceneData.Instance.Score = score;
     }
 
     public int GetScore()

@@ -6,8 +6,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public MainMenu MainMenu;
-
     public Rigidbody RB;
     public Buoyancy Buoyancy;
 
@@ -51,14 +49,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!MainMenu.Started)
+        if (!ToggleMenu.Instance.Started)
         {
             return;
         }
 
         UpdateBoost();
         Update_Movement();
-        if (!PlayerInventory.Instance.IsActive)
+        if (!PlayerInventory.Instance.IsActive && !ToggleMenu.Instance.Menu.activeSelf)
         {
             Update_Looking();
         }

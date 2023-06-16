@@ -145,7 +145,8 @@ public class Player : MonoBehaviour
         if (Health <= 0)
         {
             Health = 0;
-            //TODO die
+            SceneData.Instance.ScoreDescription = "You got blown up by drones!\nTip: Craft Turrets or faster Propellers!";
+            SceneData.Instance.GoToScoreScreen();
         }
         UpdateBar();
     }

@@ -25,7 +25,7 @@ public class Energy : MonoBehaviour
 
     private void Update()
     {
-        if (!MainMenu.Instance.Started)
+        if (!ToggleMenu.Instance.Started)
         {
             return;
         }
@@ -120,7 +120,8 @@ public class Energy : MonoBehaviour
         {
             timeRemainingZero = true;
         }
-        Debug.LogWarning("No Battery Remaining");
+        SceneData.Instance.ScoreDescription = "You ran out of energy!\nTip: Craft batteries!";
+        SceneData.Instance.GoToScoreScreen();
     }
 
 
