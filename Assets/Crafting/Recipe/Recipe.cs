@@ -23,6 +23,8 @@ public class Recipe : MonoBehaviour
 
     private Crafting.RecipeData RecipeData;
 
+    public float BatteryFloatAmount;
+
     public void SetRecipe(Crafting.RecipeData data)
     {
         RecipeData = data;
@@ -65,7 +67,7 @@ public class Recipe : MonoBehaviour
         Slot[] slots = new Slot[RecipeData.IngredientIDs.Length];
         for (int i = 0; i < RecipeData.IngredientIDs.Length; i++)
         {
-            Slot slot = PlayerInventory.Instance.FindItem(RecipeData.IngredientIDs[i], true);
+            Slot slot = PlayerInventory.Instance.FindItem(RecipeData.IngredientIDs[i]);
             if (slot == null)
             {
                 // Item not found
@@ -97,6 +99,7 @@ public class Recipe : MonoBehaviour
         PlayerInventory.Instance.AddItem(RecipeData.ResultID, new()
         {
             amount = 1,
+            float1 = new List<float>() { RecipeData.ResultID == 100 ? BatteryFloatAmount : 0 }
         });
     }
 

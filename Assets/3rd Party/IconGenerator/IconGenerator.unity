@@ -608,8 +608,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targets:
-  - name: 
-    obj: {fileID: 0}
+  - name: DetectorStructure
+    obj: {fileID: 7675748475590263071, guid: 925f72d5310fc2343b0d96bab64fa2ea, type: 3}
   overlays: []
   customFolder: Icons
   rawIcon: {fileID: 0}

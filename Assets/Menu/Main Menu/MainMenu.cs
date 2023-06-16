@@ -67,7 +67,7 @@ public class MainMenu : MonoBehaviour
     private void GiveItemsOnStart()
     {
         // Gives a battery that lasts 5 minutes
-        PlayerInventory.Instance.AddItem(1, new()
+        PlayerInventory.Instance.AddItem(100, new()
         {
             amount = 1,
             float1 = new()

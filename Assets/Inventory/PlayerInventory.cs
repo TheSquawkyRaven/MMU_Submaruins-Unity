@@ -11,7 +11,6 @@ public class PlayerInventory : MonoBehaviour
     public Canvas InventoryCanvas;
     public Inventory Equipment;
     public Inventory Storage;
-    public Inventory Toolbar;
 
     public bool IsActive => InventoryCanvas.enabled;
 
@@ -41,7 +40,6 @@ public class PlayerInventory : MonoBehaviour
         {
             return true;
         }
-        stored = Toolbar.AddItem(itemID, itemData);
         return stored;
     }
 
@@ -67,15 +65,18 @@ public class PlayerInventory : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public Slot FindItem(int id, bool getFromToolbar)
+    public Slot FindItem(int id)
     {
         Slot slot = Storage.FindItem(id);
-        if (slot != null || !getFromToolbar)
-        {
-            return slot;
-        }
-        slot = Toolbar.FindItem(id);
         return slot;
+    }
+
+
+    [ContextMenu("Add Stuff")]
+    public void AddStuff()
+    {
+        AddItem(0, new() { amount = 50 });
+        AddItem(1, new() { amount = 50 });
     }
 
 }

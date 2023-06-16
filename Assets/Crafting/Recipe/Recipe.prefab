@@ -609,6 +609,7 @@ MonoBehaviour:
   - Obj: {fileID: 504503353523330722}
     Image: {fileID: 504503354641132530}
     Text: {fileID: 504503354048993674}
+  BatteryFloatAmount: 300
 --- !u!1 &504503354335110260
 GameObject:
   m_ObjectHideFlags: 0

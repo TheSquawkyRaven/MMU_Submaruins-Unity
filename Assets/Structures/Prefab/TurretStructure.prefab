@@ -107,7 +107,7 @@ MonoBehaviour:
   ShootAudio: {fileID: 4481047282110152664}
   ShotPrefab: {fileID: 1579546626485678, guid: 7db58c0e931b44d52826ad1829194c32, type: 3}
   MuzzleTR: {fileID: 4547429070247584216}
-  ShootCooldown: 10
+  ShootCooldown: 1
   DronesInRange: []
 --- !u!82 &4481047282110152664
 AudioSource:

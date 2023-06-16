@@ -30,7 +30,7 @@ public class Score : MonoBehaviour
     {
         int score = GetScore();
         ScoreText.SetText($"Score: {score}");
-        GarbageText.SetText($"Garbage Removed: {GarbageManager.Instance.collectedAmount}/{GarbageManager.Instance.amount}");
+        GarbageText.SetText($"Garbage Removed: {GarbageManager.Instance.collectedAmount}/{GarbageManager.Instance.TotalAmount}");
         DronesText.SetText($"Drones Destroyed: {DroneManager.Instance.destroyedAmount}/{DroneManager.Instance.amount}");
     }
 

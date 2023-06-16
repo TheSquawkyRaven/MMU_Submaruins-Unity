@@ -105,7 +105,7 @@ public class Energy : MonoBehaviour
 
     private void NoTimeRemaining()
     {
-        Slot slot = PlayerInventory.Instance.FindItem(EnergyItemID, true);
+        Slot slot = PlayerInventory.Instance.FindItem(EnergyItemID);
         if (slot != null)
         {
             slot.TransferToSlot(Slot);

@@ -9,10 +9,14 @@ public class DroneDetection : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.transform == Player.Instance.transform)
+        if (other.transform.parent.parent == Player.Instance.transform)
         {
             Drone.DetectedPlayer(Player.Instance.transform);
             Debug.Log("Detected Player");
+        }
+        else
+        {
+            Debug.Log(other.attachedRigidbody.name);
         }
     }
 

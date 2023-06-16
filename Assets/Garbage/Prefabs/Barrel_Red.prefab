@@ -94,10 +94,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b5483f8f20d9840b7ed7eaffa0cd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Garbage
+  Name: Garbage (Metal)
   itemID: 0
   itemData:
-    amount: 0
+    amount: 2
     float1: []
 --- !u!114 &3686597391480162916
 MonoBehaviour:
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RB: {fileID: 9129263711581121430}
   IsUnderwater: 0
-  StopUpwardsFloat: 0
+  StopUpwardsFloat: 1
   WaterDrag: 3
   WaterAngularDrag: 2
   AirDrag: 0

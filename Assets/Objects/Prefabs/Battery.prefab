@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Battery
-  itemID: 1
+  itemID: 100
   itemData:
     amount: 1
     float1:
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RB: {fileID: 769919833172820153}
   IsUnderwater: 0
+  StopUpwardsFloat: 0
   WaterDrag: 3
   WaterAngularDrag: 2
   AirDrag: 0

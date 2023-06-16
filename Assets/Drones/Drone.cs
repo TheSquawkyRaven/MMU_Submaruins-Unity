@@ -8,6 +8,7 @@ public class Drone : MonoBehaviour
     public Light ArmLight;
 
     public Transform PlayerTR;
+    public Collider Collider;
     public GameObject Explosion;
 
     public float MoveSpeed;
@@ -26,7 +27,7 @@ public class Drone : MonoBehaviour
     public void DetectedPlayer(Transform PlayerTR)
     {
         playerDetected = true;
-        this.PlayerTR = PlayerTR.parent.parent;
+        this.PlayerTR = PlayerTR;
     }
 
     private void Update()
@@ -69,6 +70,7 @@ public class Drone : MonoBehaviour
 
     private void Explode()
     {
+        DroneManager.Instance.DroneDestroyed();
         Instantiate(Explosion, transform.position, transform.rotation);
         float dist = Vector3.Distance(Player.Instance.transform.position, transform.position);
         if (dist < ExplodeDistance)
@@ -80,6 +82,7 @@ public class Drone : MonoBehaviour
 
     public void ShotDestroy()
     {
+        Collider.enabled = false;
         Explode();
     }
 
