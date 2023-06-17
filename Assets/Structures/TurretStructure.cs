@@ -57,16 +57,27 @@ public class TurretStructure : MonoBehaviour {
         GameObject newShotFX = Instantiate(ShotPrefab, MuzzleTR);
         Destroy(newShotFX, 2);
 
+
+        if (DronesInRange.Count == 0)
+        {
+			aimingDrone = null;
+            return;
+        }
+        aimingDrone = DronesInRange[Random.Range(0, DronesInRange.Count)];
+
     }
 
 	public void Aiming()
 	{
-		if (DronesInRange.Count == 0)
-		{
-			return;
-		}
+		if (aimingDrone == null)
+        {
+            if (DronesInRange.Count == 0)
+            {
+                return;
+            }
 
-        aimingDrone = DronesInRange[Random.Range(0, DronesInRange.Count)];
+            aimingDrone = DronesInRange[Random.Range(0, DronesInRange.Count)];
+        }
 
 		transform.LookAt(aimingDrone.transform.position);
 	}
