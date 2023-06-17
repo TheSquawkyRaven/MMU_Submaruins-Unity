@@ -186,6 +186,14 @@ public class PlayerMovement : MonoBehaviour
         float yDamp = LookDampening.Evaluate(yAbs);
         y *= yDamp;
         rotation += new Vector3(-y, x);
+        if (rotation.x > 85 && rotation.x < 180)
+        {
+            rotation.x = 85;
+        }
+        if (rotation.x > 180 && rotation.x < 275)
+        {
+            rotation.x = 275;
+        }
         transform.rotation = Quaternion.Euler(rotation);
 
     }

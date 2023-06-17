@@ -13903,19 +13903,19 @@ MonoBehaviour:
     IngredientAmount: 0500000005000000
     ResultID: 100
   - IngredientIDs: 00000000
-    IngredientAmount: 0a000000
+    IngredientAmount: 05000000
     ResultID: 101
   - IngredientIDs: 6500000001000000
-    IngredientAmount: 010000000a000000
+    IngredientAmount: 0100000005000000
     ResultID: 102
   - IngredientIDs: 660000000000000001000000
-    IngredientAmount: 010000000f0000000f000000
+    IngredientAmount: 010000000a0000000a000000
     ResultID: 103
-  - IngredientIDs: 640000006500000000000000
-    IngredientAmount: 020000000100000014000000
+  - IngredientIDs: 640000006500000001000000
+    IngredientAmount: 020000000100000005000000
     ResultID: 201
   - IngredientIDs: 640000000000000001000000
-    IngredientAmount: 010000000a00000014000000
+    IngredientAmount: 010000000a0000000f000000
     ResultID: 202
   RecipePrefab: {fileID: 504503354249972528, guid: b4859d0319f035e48a55f3e6a00498da, type: 3}
   RecipeContainer: {fileID: 1771058837}
@@ -17191,7 +17191,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911550769}
-  m_LocalRotation: {x: -0.0031314094, y: -0.000000017432958, z: -5.2635507e-10, w: 0.9999951}
+  m_LocalRotation: {x: -0.0031314294, y: 0.000000017132113, z: 5.17272e-10, w: 0.9999951}
   m_LocalPosition: {x: 133.8, y: 429.2848, z: 100.13564}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

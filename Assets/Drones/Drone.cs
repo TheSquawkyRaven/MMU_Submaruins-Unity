@@ -48,7 +48,7 @@ public class Drone : MonoBehaviour
             explodeCount -= Time.deltaTime;
             if (explodeCount <= 0)
             {
-                Explode();
+                Explode(true);
             }
             ArmLight.enabled = ((int)(explodeCount / ArmBlink)) % 2 == 0;
             float pitch = 1 + explodeCount / ArmBlink;
@@ -81,23 +81,26 @@ public class Drone : MonoBehaviour
         BeepAudio.loop = true;
     }
 
-    private void Explode()
+    private void Explode(bool damagePlayer)
     {
         Collider.enabled = false;
         OnDestroy.Invoke(this);
         DroneManager.Instance.DroneDestroyed(this);
         Instantiate(Explosion, transform.position, transform.rotation);
-        float dist = Vector3.Distance(Player.Instance.transform.position, transform.position);
-        if (dist < ExplodeDistance)
+        if (damagePlayer)
         {
-            Player.Instance.DecreaseHealth(Damage);
+            float dist = Vector3.Distance(Player.Instance.transform.position, transform.position);
+            if (dist < ExplodeDistance)
+            {
+                Player.Instance.DecreaseHealth(Damage);
+            }
         }
         Destroy(gameObject);
     }
 
     public void ShotDestroy()
     {
-        Explode();
+        Explode(false);
     }
 
 
