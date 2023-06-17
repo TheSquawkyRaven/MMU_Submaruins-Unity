@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class DroneManager : MonoBehaviour
@@ -16,30 +17,50 @@ public class DroneManager : MonoBehaviour
 
     public float MaxHeight;
 
-    public int amount;
-    public int destroyedAmount;
+    public int TotalAmount;
+    public int DestroyedAmount => TotalAmount - Drones.Count;
 
+    public List<Drone> Drones = new();
 
     private void Awake()
     {
         instance = this;
     }
 
-    private void Start()
+    public List<Save.Obj> GetSave()
+    {
+        List<Save.Obj> drones = new();
+
+        for (int i = 0; i < Drones.Count; i++)
+        {
+            drones.Add(new()
+            {
+                Pos = Drones[i].transform.position,
+                Rot = Drones[i].transform.rotation,
+            });
+        }
+
+        return drones;
+
+    }
+
+
+
+    public void StartSpawning()
     {
         Bounds bounds = Renderer.bounds;
 
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < TotalAmount; i++)
         {
             Vector3 start = new(Random.Range(bounds.min.x, bounds.max.x), bounds.min.y, Random.Range(bounds.min.z, bounds.max.z));
             if (Physics.Raycast(start, Vector3.down, out RaycastHit hit, 1 << 10))
             {
                 GameObject spawn = DronePrefab;
-                Vector3 spawnPos = hit.point;
-                spawnPos.y = Random.Range(spawnPos.y, MaxHeight);
                 GameObject obj = Instantiate(spawn, hit.point, Quaternion.identity);
                 obj.transform.SetParent(DroneContainer);
-                obj.GetComponent<Drone>().PlayerTR = PlayerTR;
+                Drone d = obj.GetComponent<Drone>();
+                d.PlayerTR = PlayerTR;
+                Drones.Add(d);
             }
             else
             {
@@ -51,9 +72,27 @@ public class DroneManager : MonoBehaviour
 
     }
 
-    public void DroneDestroyed()
+    public void StartSpawning(List<Save.Obj> drones)
     {
-        destroyedAmount++;
+        for (int i = 0; i < drones.Count; i++)
+        {
+            SpawnDrones(drones[i]);
+        }
+    }
+
+    private void SpawnDrones(Save.Obj saveObj)
+    {
+        GameObject spawn = DronePrefab;
+        GameObject obj = Instantiate(spawn, saveObj.Pos.V(), saveObj.Rot.Q());
+        obj.transform.SetParent(DroneContainer);
+        Drone d = obj.GetComponent<Drone>();
+        d.PlayerTR = PlayerTR;
+        Drones.Add(d);
+    }
+
+    public void DroneDestroyed(Drone drone)
+    {
+        Drones.Remove(drone);
         Score.Instance.UpdateScore();
     }
 

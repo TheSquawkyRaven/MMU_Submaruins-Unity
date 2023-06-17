@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Drone : MonoBehaviour
@@ -10,6 +12,8 @@ public class Drone : MonoBehaviour
     public Transform PlayerTR;
     public Collider Collider;
     public GameObject Explosion;
+
+    public AudioSource BeepAudio;
 
     public float MoveSpeed;
 
@@ -24,10 +28,13 @@ public class Drone : MonoBehaviour
     public float ExplodeDistance;
     public int Damage;
 
+    public event Action<Drone> OnDestroy = _ => { };
+
     public void DetectedPlayer(Transform PlayerTR)
     {
         playerDetected = true;
         this.PlayerTR = PlayerTR;
+        BeepAudio.Play();
     }
 
     private void Update()
@@ -44,6 +51,10 @@ public class Drone : MonoBehaviour
                 Explode();
             }
             ArmLight.enabled = ((int)(explodeCount / ArmBlink)) % 2 == 0;
+            float pitch = 1 + explodeCount / ArmBlink;
+
+            BeepAudio.pitch = pitch;
+
             return;
         }
         transform.LookAt(PlayerTR.position);
@@ -66,11 +77,15 @@ public class Drone : MonoBehaviour
     {
         Arming = true;
         explodeCount = ExplodeCountdown;
+        BeepAudio.Play();
+        BeepAudio.loop = true;
     }
 
     private void Explode()
     {
-        DroneManager.Instance.DroneDestroyed();
+        Collider.enabled = false;
+        OnDestroy.Invoke(this);
+        DroneManager.Instance.DroneDestroyed(this);
         Instantiate(Explosion, transform.position, transform.rotation);
         float dist = Vector3.Distance(Player.Instance.transform.position, transform.position);
         if (dist < ExplodeDistance)
@@ -82,7 +97,6 @@ public class Drone : MonoBehaviour
 
     public void ShotDestroy()
     {
-        Collider.enabled = false;
         Explode();
     }
 

@@ -23,27 +23,38 @@ public class Score : MonoBehaviour
 
     private void Start()
     {
-        UpdateScore();
+        UpdateScore(true);
     }
 
-    public void UpdateScore()
+    public void UpdateScore(bool firstLoad = false)
     {
         int score = GetScore();
         ScoreText.SetText($"Score: {score}");
-        GarbageText.SetText($"Garbage Removed: {GarbageManager.Instance.collectedAmount}/{GarbageManager.Instance.TotalAmount}");
-        DronesText.SetText($"Drones Destroyed: {DroneManager.Instance.destroyedAmount}/{DroneManager.Instance.amount}");
+        GarbageText.SetText($"Garbage Removed: {GarbageManager.Instance.CollectedAmount}/{GarbageManager.Instance.TotalAmount}");
+        DronesText.SetText($"Drones Destroyed: {DroneManager.Instance.DestroyedAmount}/{DroneManager.Instance.TotalAmount}");
 
-        if (GarbageManager.Instance.collectedAmount == GarbageManager.Instance.TotalAmount && DroneManager.Instance.destroyedAmount == DroneManager.Instance.amount)
+        if (firstLoad)
+        {
+            return;
+        }
+        if (GarbageManager.Instance.CollectedAmount == GarbageManager.Instance.TotalAmount && DroneManager.Instance.DestroyedAmount == DroneManager.Instance.TotalAmount)
         {
             SceneData.Instance.ScoreDescription = "You restored the ocean completely 100%!\nCONGRATULATIONS!";
             SceneData.Instance.GoToScoreScreen();
         }
-        SceneData.Instance.Score = score;
+        if (SceneData.Instance != null)
+        {
+            SceneData.Instance.Score = score;
+        }
+        if (GameSaveLoader.Instance != null)
+        {
+            GameSaveLoader.Instance.SaveGame();
+        }
     }
 
     public int GetScore()
     {
-        return GarbageManager.Instance.collectedAmount * GarbageScoreMult + DroneManager.Instance.destroyedAmount * DroneScoreMult;
+        return GarbageManager.Instance.CollectedAmount * GarbageScoreMult + DroneManager.Instance.DestroyedAmount * DroneScoreMult;
     }
 
 

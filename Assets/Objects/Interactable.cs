@@ -17,12 +17,17 @@ public class Interactable : MonoBehaviour
     {
         if (playerInventory.AddItem(itemID, itemData))
         {
-            OnDestroy.Invoke(this);
+            CallOnDestroy();
             Destroy(gameObject);
             return true;
         }
         //Full
         return false;
+    }
+
+    protected void CallOnDestroy()
+    {
+        OnDestroy.Invoke(this);
     }
 
 

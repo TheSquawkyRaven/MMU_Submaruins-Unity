@@ -19,6 +19,8 @@ public class TurretStructure : MonoBehaviour {
     public List<Drone> DronesInRange = new();
 
 
+	private Drone aimingDrone;
+
 	private void Update ()
 	{
 		if (DronesInRange.Count == 0)
@@ -38,7 +40,7 @@ public class TurretStructure : MonoBehaviour {
 		
 	private void Shoot()
     {
-        Drone target = DronesInRange[0];
+        Drone target = aimingDrone;
 
         if (Physics.Raycast(MuzzleTR.position, target.transform.position - MuzzleTR.position, out RaycastHit hit, 1000))
         {
@@ -46,6 +48,7 @@ public class TurretStructure : MonoBehaviour {
 			{
 				drone.ShotDestroy();
 				DronesInRange.Remove(drone);
+				aimingDrone = null;
             }
         }
 
@@ -63,9 +66,9 @@ public class TurretStructure : MonoBehaviour {
 			return;
 		}
 
-		Drone target = DronesInRange[0];
+        aimingDrone = DronesInRange[Random.Range(0, DronesInRange.Count)];
 
-		transform.LookAt(target.transform.position);
+		transform.LookAt(aimingDrone.transform.position);
 	}
 
 	public void DroneEnter(Drone drone)

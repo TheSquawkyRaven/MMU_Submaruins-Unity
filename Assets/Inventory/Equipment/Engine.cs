@@ -16,7 +16,7 @@ public class Engine : MonoBehaviour
     public Item Item => Slot.Item;
     public ItemData ItemData => Slot.ItemData;
 
-    private void Start()
+    private void Awake()
     {
         Slot.CheckAllowedIDs = true;
         Slot.AllowedIDs = EngineItemIDs;

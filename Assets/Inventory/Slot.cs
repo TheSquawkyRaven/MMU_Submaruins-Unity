@@ -70,6 +70,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             
             HoldingItem.Instance.SetItem(item, itemData);
             SetItem(null, null);
+            CameraController.Instance.PlayClickSound();
             return;
         }
 
@@ -88,6 +89,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
             HoldingItem.Instance.SetItem(null, null);
         }
         SetItem(holdingItem, holdingItemData);
+        CameraController.Instance.PlayClickSound();
     }
 
     public bool Allowed(int itemID)
@@ -135,11 +137,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         SetItem(null, null);
     }
 
-    public virtual void SetItem(Item item, ItemData itemData)
+    public virtual void SetItem(Item item, ItemData itemData, bool skipUpdate = false)
     {
         this.item = item;
         this.itemData = itemData;
-        ItemUpdate();
+        ItemUpdate(skipUpdate);
     }
     public virtual void AddItemData(ItemData itemData)
     {
@@ -147,11 +149,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         ItemUpdate();
     }
 
-    public virtual void ItemUpdate()
+    public virtual void ItemUpdate(bool skipUpdate = false)
     {
         SetDisplay();
         OnItemUpdated.Invoke(Item, ItemData);
-        PlayerInventory.Instance.InventoryChange();
+        if (!skipUpdate)
+        {
+            PlayerInventory.Instance.InventoryChange();
+        }
     }
 
     public virtual void RemoveAmount(int amount)

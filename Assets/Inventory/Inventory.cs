@@ -72,9 +72,34 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
+    public List<(int, ItemData)> GetSave()
+    {
+        List<(int, ItemData)> save = new();
+        for (int i = 0; i < Slots.Count; i++)
+        {
+            if (Slots[i].Item == null)
+            {
+                save.Add((-1, null));
+            }
+            else
+            {
+                save.Add((Slots[i].Item.id, Slots[i].ItemData));
+            }
+        }
+        return save;
+    }
 
-
-
+    public void LoadSave(List<(int, ItemData)> save)
+    {
+        for (int i = 0; i < Slots.Count; i++)
+        {
+            if (save[i].Item1 == -1)
+            {
+                continue;
+            }
+            Slots[i].SetItem(ItemDatabase.Instance.GetItem(save[i].Item1), save[i].Item2, true);
+        }
+    }
 
 
 

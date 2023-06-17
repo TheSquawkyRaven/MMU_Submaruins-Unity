@@ -14,6 +14,7 @@ public class ScoreScene : MonoBehaviour
     {
         ScoreNumberText.SetText($"Score: {SceneData.Instance.Score}");
         ScoreDescriptionText.SetText(SceneData.Instance.ScoreDescription);
+        Cursor.lockState = CursorLockMode.None;
     }
 
 }

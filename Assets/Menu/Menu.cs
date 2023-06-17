@@ -17,6 +17,20 @@ public class Menu : MonoBehaviour
     public Slider SoundsSlider;
 
 
+    private void Start()
+    {
+        float masterVol = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        float musicVol = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        float soundsVol = PlayerPrefs.GetFloat("SoundsVolume", 1f);
+        MasterSlider.value = masterVol;
+        MusicSlider.value = musicVol;
+        SoundsSlider.value = soundsVol;
+        SetMasterVolume();
+        SetMusicVolume();
+        SetSoundsVolume();
+    }
+
+
     public void Quit()
     {
         Application.Quit();
@@ -24,11 +38,12 @@ public class Menu : MonoBehaviour
 
     public void NewGame()
     {
+        SceneData.Instance.LoadingData = null;
         SceneManager.LoadScene(1);
     }
     public void LoadGame()
     {
-        // TODO load?
+        Save.Instance.LoadFromFile();
         SceneManager.LoadScene(1);
     }
 
@@ -39,15 +54,24 @@ public class Menu : MonoBehaviour
 
     public void SetMasterVolume()
     {
-        AudioMixer.SetFloat("MasterVolume", Mathf.Log10(MasterSlider.value) * 20);
+        float vol = Mathf.Log10(MasterSlider.value) * 20;
+        AudioMixer.SetFloat("MasterVolume", vol);
+        PlayerPrefs.SetFloat("MasterVolume", MasterSlider.value);
+        PlayerPrefs.Save();
     }
     public void SetMusicVolume()
     {
-        AudioMixer.SetFloat("MusicVolume", Mathf.Log10(MusicSlider.value) * 20);
+        float vol = Mathf.Log10(MusicSlider.value) * 20;
+        AudioMixer.SetFloat("MusicVolume", vol);
+        PlayerPrefs.SetFloat("MusicVolume", MusicSlider.value);
+        PlayerPrefs.Save();
     }
     public void SetSoundsVolume()
     {
-        AudioMixer.SetFloat("SoundsVolume", Mathf.Log10(SoundsSlider.value) * 20);
+        float vol = Mathf.Log10(SoundsSlider.value) * 20;
+        AudioMixer.SetFloat("SoundsVolume", vol);
+        PlayerPrefs.SetFloat("SoundsVolume", SoundsSlider.value);
+        PlayerPrefs.Save();
     }
 
 }

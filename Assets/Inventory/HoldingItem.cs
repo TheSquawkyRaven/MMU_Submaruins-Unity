@@ -30,9 +30,9 @@ public class HoldingItem : Slot
         }
     }
 
-    public override void SetItem(Item item, ItemData itemData)
+    public override void SetItem(Item item, ItemData itemData, bool skipUpdate = false)
     {
-        base.SetItem(item, itemData);
+        base.SetItem(item, itemData, skipUpdate);
         HoldingItemObject.SetActive(item != null);
     }
 

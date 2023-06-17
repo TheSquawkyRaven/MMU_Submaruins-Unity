@@ -5,12 +5,17 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
+    private static CameraController instance;
+    public static CameraController Instance => instance;
 
     public CinemachineVirtualCamera MainMenuVCam;
     public CinemachineVirtualCamera PlayerVCam;
 
+    public AudioSource ClickAudio;
+
     private void Awake()
     {
+        instance = this;
         MainMenuVCam.Priority = 100;
         PlayerVCam.Priority = 0;
     }
@@ -25,6 +30,11 @@ public class CameraController : MonoBehaviour
     {
         MainMenuVCam.Priority = 100;
         PlayerVCam.Priority = 0;
+    }
+
+    public void PlayClickSound()
+    {
+        ClickAudio.Play();
     }
 
 }

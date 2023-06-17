@@ -121,6 +121,11 @@ public class ToggleMenu : MonoBehaviour
 
     private void GiveItemsOnStart()
     {
+        if (SceneData.Instance.LoadingData != null)
+        {
+            // Loaded so no give
+            return;
+        }
         // Gives a battery that lasts 5 minutes
         PlayerInventory.Instance.AddItem(100, new()
         {

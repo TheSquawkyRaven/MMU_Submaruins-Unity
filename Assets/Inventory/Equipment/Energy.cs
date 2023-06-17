@@ -63,6 +63,7 @@ public class Energy : MonoBehaviour
         {
             itemData.amount -= 1;
             itemData.float1.RemoveAt(0);
+            Slot.SetDisplay();
 
             if (itemData.amount == 0)
             {
@@ -100,7 +101,6 @@ public class Energy : MonoBehaviour
     private void Depleted()
     {
         Slot.SetItem(null, null);
-        Slot.SetDisplay();
     }
 
     private void NoTimeRemaining()

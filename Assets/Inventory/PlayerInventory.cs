@@ -11,6 +11,7 @@ public class PlayerInventory : MonoBehaviour
     public Canvas InventoryCanvas;
     public Inventory Equipment;
     public Inventory Storage;
+    public Inventory Toolbar;
 
     public CanvasGroup CG;
 
@@ -24,11 +25,17 @@ public class PlayerInventory : MonoBehaviour
     {
         instance = this;
         EnableInventory(false);
+        InventoryCanvas.enabled = false;
     }
 
     public void InventoryChange()
     {
         InventoryChanged.Invoke();
+
+        if (GameSaveLoader.Instance != null)
+        {
+            GameSaveLoader.Instance.SaveGame();
+        }
     }
 
     public bool AddItem(int itemID, ItemData itemData)

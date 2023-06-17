@@ -8,6 +8,8 @@ public class Toucher : MonoBehaviour
     public PlayerMovement PlayerMovement;
     public Player Player;
 
+    public AudioSource BubblesAudio;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,6 +23,7 @@ public class Toucher : MonoBehaviour
             {
                 Player.IncreaseHealth(touchable.HealthBoost);
             }
+            BubblesAudio.Play();
             touchable.Used();
         }
     }

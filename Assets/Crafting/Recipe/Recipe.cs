@@ -101,6 +101,7 @@ public class Recipe : MonoBehaviour
             amount = 1,
             float1 = new List<float>() { RecipeData.ResultID == 100 ? BatteryFloatAmount : 0 }
         });
+        CameraController.Instance.PlayClickSound();
     }
 
 }

@@ -12,6 +12,7 @@ public class Buoyancy : MonoBehaviour
     public bool IsUnderwater;
 
     public bool StopUpwardsFloat;
+    public bool SetLowGravity;
 
     public float WaterDrag;
     public float WaterAngularDrag;
@@ -40,7 +41,12 @@ public class Buoyancy : MonoBehaviour
             else
             {
                 RB.AddForceAtPosition(new Vector3(0, Random.value, 0) * Random.Range(-WavesHeight, WavesHeight), transform.position + new Vector3(Random.Range(-Jankyness, Jankyness), Random.Range(-Jankyness, Jankyness), Random.Range(-Jankyness, Jankyness)), ForceMode.Force);
+
                 RB.useGravity = false;
+                if (SetLowGravity)
+                {
+                    RB.AddForce(Vector3.down, ForceMode.Force);
+                }
             }
             if (!IsUnderwater)
             {

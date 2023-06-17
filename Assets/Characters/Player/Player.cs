@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,25 @@ public class Player : MonoBehaviour
     public GameObject Slot2Prefab;
 
     public GameObject SelectedRaycastPos;
+
+    public List<GameObject> DetectorStructures = new();
+    public List<GameObject> TurretStructures = new();
+
+    public List<Save.Obj> GetSave(bool isDetector)
+    {
+        List<Save.Obj> save = new();
+        List<GameObject> target = isDetector ? DetectorStructures : TurretStructures;
+
+        for (int i = 0; i < target.Count; i++)
+        {
+            save.Add(new Save.Obj()
+            {
+                Pos = target[i].transform.position,
+                Rot = target[i].transform.rotation,
+            });
+        }
+        return save;
+    }
 
 
     private void Awake()
@@ -100,25 +120,11 @@ public class Player : MonoBehaviour
             {
                 if (slotNumber == 1)
                 {
-                    Instantiate(Slot1Prefab, hit.point, Quaternion.identity);
-                    Slot1.RemoveAmount(1);
-                    if (Slot1.Item == null)
-                    {
-                        SelectedSlot = null;
-                        SelectedRaycastPos.SetActive(false);
-                        slotNumber = 0;
-                    }
+                    SpawnStructure(true, hit.point, Quaternion.identity, true);
                 }
                 else if (slotNumber == 2)
                 {
-                    Instantiate(Slot2Prefab, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-                    Slot2.RemoveAmount(1);
-                    if (Slot2.Item == null)
-                    {
-                        SelectedSlot = null;
-                        SelectedRaycastPos.SetActive(false);
-                        slotNumber = 0;
-                    }
+                    SpawnStructure(false, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal), true);
                 }
             }
         }
@@ -128,10 +134,63 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void StartSpawning(List<Save.Obj> DetectorStructures, List<Save.Obj> TurretStructures)
+    {
+        for (int i = 0; i < DetectorStructures.Count; i++)
+        {
+            SpawnStructure(true, DetectorStructures[i].Pos.V(), DetectorStructures[i].Rot.Q(), false);
+        }
+        for (int i = 0; i < TurretStructures.Count; i++)
+        {
+            SpawnStructure(false, TurretStructures[i].Pos.V(), TurretStructures[i].Rot.Q(), false);
+        }
+    }
+
+    public void SpawnStructure(bool isDetector, Vector3 pos, Quaternion rot, bool remove)
+    {
+        if (isDetector)
+        {
+            GameObject g = Instantiate(Slot1Prefab, pos, rot);
+            DetectorStructures.Add(g);
+            if (remove)
+            {
+                Slot1.RemoveAmount(1);
+                if (Slot1.Item == null)
+                {
+                    SelectedSlot = null;
+                    SelectedRaycastPos.SetActive(false);
+                    slotNumber = 0;
+                }
+            }
+        }
+        else
+        {
+            GameObject g = Instantiate(Slot2Prefab, pos, rot);
+            TurretStructures.Add(g);
+            if (remove)
+            {
+                Slot2.RemoveAmount(1);
+                if (Slot2.Item == null)
+                {
+                    SelectedSlot = null;
+                    SelectedRaycastPos.SetActive(false);
+                    slotNumber = 0;
+                }
+            }
+        }
+    }
+
+
+    public void SetHealth(int health)
+    {
+        Health = health;
+        UpdateBar();
+    }
+
     public void IncreaseHealth(int health)
     {
         Health += health;
-        if (Health < MaxHealth)
+        if (Health > MaxHealth)
         {
             Health = MaxHealth;
         }
